@@ -35,7 +35,7 @@ func NtAllocateVirtualMemory(processHandle windows.Handle, baseAddress *uintptr,
 	return
 }
 
-func NtOpenProcess(processHandle windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, clientID *ClientID) (err error) {
+func NtOpenProcess(processHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, clientID *ClientID) (err error) {
 	if bpGlobal == nil {
 		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
 		return
@@ -46,7 +46,7 @@ func NtOpenProcess(processHandle windows.Handle, desiredAccess windows.ACCESS_MA
 		err = e
 		return
 	}
-	r1, _ := bananaphone.Syscall(sysid, uintptr(processHandle), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(clientID)))
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(processHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(clientID)))
 	if r1 != 0 {
 		err = fmt.Errorf("error code: %x", r1)
 	}
