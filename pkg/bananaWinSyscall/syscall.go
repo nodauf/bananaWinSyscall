@@ -1,4 +1,4 @@
-package main
+package bananawinsyscall
 
 import "golang.org/x/sys/windows"
 
