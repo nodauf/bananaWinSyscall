@@ -264,6 +264,11 @@ func (f *Fn) SyscallParamList() string {
 		}
 		a = append(a, p.SyscallArgList()...)
 	}
-
+	// Padding to add at least 5 parameters stack alignment https://bloodhoundhq.slack.com/archives/CF84C5ZAQ/p1643796525528109
+	if len(f.Params) < 5 {
+		for i := len(f.Params); i < 5; i++ {
+			a = append(a, "0")
+		}
+	}
 	return strings.Join(a, ", ")
 }

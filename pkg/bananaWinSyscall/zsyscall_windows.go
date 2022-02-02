@@ -46,7 +46,7 @@ func NtOpenProcess(processHandle *windows.Handle, desiredAccess windows.ACCESS_M
 		err = e
 		return
 	}
-	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(processHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(clientID)))
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(processHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(clientID)), 0)
 	if r1 != 0 {
 		err = fmt.Errorf("error code: %x", r1)
 	}
