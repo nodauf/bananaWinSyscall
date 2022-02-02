@@ -25,6 +25,6 @@ __kernel_entry NTSYSCALLAPI NTSTATUS NtAllocateVirtualMemory(
   [in]           POBJECT_ATTRIBUTES ObjectAttributes,
   [in, optional] PCLIENT_ID         ClientId
 );*/
-//dsys NtOpenProcess(processHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, clientID *ClientID) (err error)
+//dsys NtOpenProcess(processHandle windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, clientID *ClientID) (err error)
 
 //go:generate go run github.com/nodauf/bananaWinSyscall/mkdirectwinsyscall -output zsyscall_windows.go syscall.go
