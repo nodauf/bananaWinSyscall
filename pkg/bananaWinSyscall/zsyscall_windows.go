@@ -53,7 +53,7 @@ func NtOpenProcess(processHandle *windows.Handle, desiredAccess windows.ACCESS_M
 	return
 }
 
-func NtProtectVirtualMemory(processHandle windows.Handle, baseAddress *uintptr, numberOfBytesToProtect *int64, newAccessProtection int64, OldAccessProtection *int64) (err error) {
+func NtProtectVirtualMemory(processHandle windows.Handle, baseAddress *uintptr, numberOfBytesToProtect *uintptr, newAccessProtection int64, OldAccessProtection *int64) (err error) {
 	if bpGlobal == nil {
 		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
 		return

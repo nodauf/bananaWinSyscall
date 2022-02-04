@@ -34,6 +34,6 @@ __kernel_entry NTSYSCALLAPI NTSTATUS NtProtectVirtualMemory(
   IN OUT PULONG           NumberOfBytesToProtect,
   IN ULONG                NewAccessProtection,
   OUT PULONG              OldAccessProtection );*/
-//dsys NtProtectVirtualMemory(processHandle windows.Handle, baseAddress *uintptr, numberOfBytesToProtect *int64, newAccessProtection int64, OldAccessProtection *int64) (err error)
+//dsys NtProtectVirtualMemory(processHandle windows.Handle, baseAddress *uintptr, numberOfBytesToProtect *uintptr, newAccessProtection int64, OldAccessProtection *int64) (err error)
 
 //go:generate go run github.com/nodauf/bananaWinSyscall/mkdirectwinsyscall -output zsyscall_windows.go syscall.go
