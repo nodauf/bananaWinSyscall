@@ -70,3 +70,45 @@ func NtProtectVirtualMemory(processHandle windows.Handle, baseAddress *uintptr, 
 	}
 	return
 }
+
+func NtCreateThreadEx(threadHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, processHandle windows.Handle, startAddress uintptr, parameter uintptr, createSuspended bool, stackZeroBits uint32, sizeOfStackCommit uint32, sizeOfStackReserve uint32, lpbytesbuffer uint32) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtCreateThreadEx")
+	if e != nil {
+		err = e
+		return
+	}
+	var _p0 uint32
+	if createSuspended {
+		_p0 = 1
+	} else {
+		_p0 = 0
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(threadHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(processHandle), uintptr(startAddress), uintptr(parameter), uintptr(_p0), uintptr(stackZeroBits), uintptr(sizeOfStackCommit), uintptr(sizeOfStackReserve), uintptr(lpbytesbuffer))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
+
+func NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uint32, numberOfBytesWritten *uint32) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtWriteVirtualMemory")
+	if e != nil {
+		err = e
+		return
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(processHandle), uintptr(baseAddress), uintptr(unsafe.Pointer(buffer)), uintptr(numberOfBytesToWrite), uintptr(unsafe.Pointer(numberOfBytesWritten)))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
