@@ -46,7 +46,25 @@ func NtOpenProcess(processHandle *windows.Handle, desiredAccess windows.ACCESS_M
 		err = e
 		return
 	}
-	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(processHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(clientID)), 0)
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(processHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(clientID)))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
+
+func NtProtectVirtualMemory(processHandle windows.Handle, baseAddress *uintptr, numberOfBytesToProtect *int64, newAccessProtection int64, OldAccessProtection *int64) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtProtectVirtualMemory")
+	if e != nil {
+		err = e
+		return
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(processHandle), uintptr(unsafe.Pointer(baseAddress)), uintptr(unsafe.Pointer(numberOfBytesToProtect)), uintptr(newAccessProtection), uintptr(unsafe.Pointer(OldAccessProtection)))
 	if r1 != 0 {
 		err = fmt.Errorf("error code: %x", r1)
 	}
