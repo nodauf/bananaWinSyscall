@@ -59,7 +59,7 @@ NTSTATUS NtWriteVirtualMemory(
   IN PVOID                Buffer,
   IN ULONG                NumberOfBytesToWrite,
   OUT PULONG              NumberOfBytesWritten OPTIONAL );*/
-//dsys NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uint32, numberOfBytesWritten *uint32) (err error)
+//dsys NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uinptr, numberOfBytesWritten *uint32) (err error)
 
 /*
 NTSTATUS NtResumeThread(
