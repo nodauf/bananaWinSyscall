@@ -53,12 +53,19 @@ __kernel_entry NTSYSCALLAPI NTSTATUS NtCreateThreadEx(
 //dsys NtCreateThreadEx(threadHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, processHandle windows.Handle, startAddress uintptr, parameter uintptr, createSuspended bool, stackZeroBits uint32, sizeOfStackCommit uint32, sizeOfStackReserve uint32, lpbytesbuffer uint32) (err error)
 
 /*
-NtWriteVirtualMemory(
+NTSTATUS NtWriteVirtualMemory(
   IN HANDLE               ProcessHandle,
   IN PVOID                BaseAddress,
   IN PVOID                Buffer,
   IN ULONG                NumberOfBytesToWrite,
   OUT PULONG              NumberOfBytesWritten OPTIONAL );*/
 //dsys NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uint32, numberOfBytesWritten *uint32) (err error)
+
+/*
+NTSTATUS NtResumeThread(
+  IN  HANDLE ThreadHandle,
+  IN  PULONG PreviousSuspendCount
+);*/
+//dsys NtResumeThread(threadHandle windows.Handle, previousSuspendCount *uint32) (err error)
 
 //go:generate go run github.com/nodauf/bananaWinSyscall/mkdirectwinsyscall -output zsyscall_windows.go syscall.go

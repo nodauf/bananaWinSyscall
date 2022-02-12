@@ -112,3 +112,21 @@ func NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buf
 	}
 	return
 }
+
+func NtResumeThread(threadHandle windows.Handle, previousSuspendCount *uint32) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtResumeThread")
+	if e != nil {
+		err = e
+		return
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(threadHandle), uintptr(unsafe.Pointer(previousSuspendCount)))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
