@@ -95,7 +95,7 @@ func NtCreateThreadEx(threadHandle *windows.Handle, desiredAccess windows.ACCESS
 	return
 }
 
-func NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uinptr, numberOfBytesWritten *uint32) (err error) {
+func NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uintptr, numberOfBytesWritten *uint32) (err error) {
 	if bpGlobal == nil {
 		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
 		return
