@@ -3,7 +3,7 @@ module github.com/nodauf/bananaWinSyscall
 go 1.17
 
 require (
-	github.com/C-Sto/BananaPhone v0.0.0-20220202134020-1526021bae3e
+	github.com/C-Sto/BananaPhone v0.0.0-20220220002628-6585e5913761
 	golang.org/x/sys v0.0.0-20220128215802-99c3d69c2c27
 )
 
