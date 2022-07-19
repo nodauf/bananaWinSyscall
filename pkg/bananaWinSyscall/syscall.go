@@ -59,7 +59,7 @@ NTSTATUS NtWriteVirtualMemory(
   IN PVOID                Buffer,
   IN ULONG                NumberOfBytesToWrite,
   OUT PULONG              NumberOfBytesWritten OPTIONAL );*/
-//dsys NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uinptr, numberOfBytesWritten *uint32) (err error)
+//dsys NtWriteVirtualMemory(processHandle windows.Handle, baseAddress uintptr, buffer *byte, numberOfBytesToWrite uintptr, numberOfBytesWritten *uint32) (err error)
 
 /*
 NTSTATUS NtResumeThread(
@@ -67,5 +67,47 @@ NTSTATUS NtResumeThread(
   IN  PULONG PreviousSuspendCount
 );*/
 //dsys NtResumeThread(threadHandle windows.Handle, previousSuspendCount *uint32) (err error)
+
+/*
+NTSTATUS NtCreateProcess(
+  OUT PHANDLE           ProcessHandle,
+  IN ACCESS_MASK        DesiredAccess,
+  IN POBJECT_ATTRIBUTES ObjectAttributes OPTIONAL,
+  IN HANDLE             ParentProcess,
+  IN BOOLEAN            InheritObjectTable,
+  IN HANDLE             SectionHandle OPTIONAL,
+  IN HANDLE             DebugPort OPTIONAL,
+  IN HANDLE             ExceptionPort OPTIONAL
+);*/
+//dsys NtCreateProcess(processHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, parentProcess windows.Handle, inheritObjectTable bool, sectionHandle windows.Handle, debugPort windows.Handle, exceptionPort windows.Handle) (err error)
+
+/*
+__kernel_entry NTSYSCALLAPI NTSTATUS NtOpenFile(
+  [out] PHANDLE            FileHandle,
+  [in]  ACCESS_MASK        DesiredAccess,
+  [in]  POBJECT_ATTRIBUTES ObjectAttributes,
+  [out] PIO_STATUS_BLOCK   IoStatusBlock,
+  [in]  ULONG              ShareAccess,
+  [in]  ULONG              OpenOptions
+);*/
+//dsys NtOpenFile(fileHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, ioStatusBlock *windows.IO_STATUS_BLOCK, shareAccess uint64, openOptions uint64) (err error)
+
+/*
+NTSTATUS NtCreateSection (
+  _Out_ PHANDLE SectionHandle,
+  _In_ ACCESS_MASK DesiredAccess,
+  _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+  _In_opt_ PLARGE_INTEGER MaximumSize,
+  _In_ ULONG SectionPageProtection,
+  _In_ ULONG AllocationAttributes,
+  _In_opt_ HANDLE FileHandle
+);*/
+//dsys NtCreateSection(sectionHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, maximumSize *int64, sectionPageProtection uint32, allocationAttributes uint32, fileHandle windows.Handle) (err error)
+
+/*
+NTSTATUS NtClose(
+      _In_ HANDLE Handle
+);*/
+//dsys NtClose(handle *windows.Handle) (err error)
 
 //go:generate go run github.com/nodauf/bananaWinSyscall/mkdirectwinsyscall -output zsyscall_windows.go syscall.go

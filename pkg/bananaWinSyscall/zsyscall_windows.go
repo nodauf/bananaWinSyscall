@@ -130,3 +130,81 @@ func NtResumeThread(threadHandle windows.Handle, previousSuspendCount *uint32) (
 	}
 	return
 }
+
+func NtCreateProcess(processHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, parentProcess windows.Handle, inheritObjectTable bool, sectionHandle windows.Handle, debugPort windows.Handle, exceptionPort windows.Handle) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtCreateProcess")
+	if e != nil {
+		err = e
+		return
+	}
+	var _p0 uint32
+	if inheritObjectTable {
+		_p0 = 1
+	} else {
+		_p0 = 0
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(processHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(parentProcess), uintptr(_p0), uintptr(sectionHandle), uintptr(debugPort), uintptr(exceptionPort))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
+
+func NtOpenFile(fileHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, ioStatusBlock *windows.IO_STATUS_BLOCK, shareAccess uint64, openOptions uint64) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtOpenFile")
+	if e != nil {
+		err = e
+		return
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(fileHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(ioStatusBlock)), uintptr(shareAccess), uintptr(openOptions))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
+
+func NtCreateSection(sectionHandle *windows.Handle, desiredAccess windows.ACCESS_MASK, objectAttributes *windows.OBJECT_ATTRIBUTES, maximumSize *int64, sectionPageProtection uint32, allocationAttributes uint32, fileHandle windows.Handle) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtCreateSection")
+	if e != nil {
+		err = e
+		return
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(sectionHandle)), uintptr(desiredAccess), uintptr(unsafe.Pointer(objectAttributes)), uintptr(unsafe.Pointer(maximumSize)), uintptr(sectionPageProtection), uintptr(allocationAttributes), uintptr(fileHandle))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
+
+func NtClose(handle *windows.Handle) (err error) {
+	if bpGlobal == nil {
+		err = fmt.Errorf("BananaPhone uninitialised: %s", bperr.Error())
+		return
+	}
+
+	sysid, e := bpGlobal.GetSysID("NtClose")
+	if e != nil {
+		err = e
+		return
+	}
+	r1, _ := bananaphone.Syscall(sysid, uintptr(unsafe.Pointer(handle)))
+	if r1 != 0 {
+		err = fmt.Errorf("error code: %x", r1)
+	}
+	return
+}
